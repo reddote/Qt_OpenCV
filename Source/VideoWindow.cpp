@@ -1,4 +1,4 @@
-#include "..\Header\VideoWindow.h"
+﻿#include "..\Header\VideoWindow.h"
 
 VideoWindow::VideoWindow(QWidget * parent) :
 	QGraphicsView(parent), scene(new QGraphicsScene(this))
@@ -80,10 +80,20 @@ void VideoWindow::wheelEvent(QWheelEvent *event) {
 }
 
 void VideoWindow::mousePressEvent(QMouseEvent *event) {
-	if (event->button() == Qt::LeftButton) {
+	if (event->button() == Qt::RightButton) {
 		startPanning(event->pos());
+	}else if(event->button() == Qt::LeftButton) {
+		QPointF scenePos = mapToScene(event->pos());
+
+		// Create a pen with desired color (blue) and increased width for boldness
+		QPen pen(Qt::blue);
+		pen.setWidth(5); // Increase the width of the pen to make the ellipse bolder
+
+		QGraphicsEllipseItem* ellipse = scene->addEllipse(scenePos.x() - 10, scenePos.y() - 10, 20, 20, pen, QBrush(Qt::transparent));
+		ellipse->setFlag(QGraphicsItem::ItemIsMovable);
 	}
-	QGraphicsView::mousePressEvent(event);
+
+	QGraphicsView::mousePressEvent(event); // Call base class implementation
 }
 
 void VideoWindow::mouseMoveEvent(QMouseEvent *event) {
