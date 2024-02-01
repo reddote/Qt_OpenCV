@@ -1,18 +1,19 @@
 /********************************************************************************
-** Form generated from reading UI file 'Qt_OpenCVp10392.ui'
+** Form generated from reading UI file 'Qt_OpenCVNl8016.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef QT_OPENCVP10392_H
-#define QT_OPENCVP10392_H
+#ifndef QT_OPENCVNL8016_H
+#define QT_OPENCVNL8016_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -26,6 +27,7 @@ class Ui_Qt_OpenCVClass
 {
 public:
     QWidget *centralWidget;
+    QGraphicsView *graphicsView;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -34,13 +36,16 @@ public:
     {
         if (Qt_OpenCVClass->objectName().isEmpty())
             Qt_OpenCVClass->setObjectName(QStringLiteral("Qt_OpenCVClass"));
-        Qt_OpenCVClass->resize(600, 400);
+        Qt_OpenCVClass->resize(1018, 541);
         centralWidget = new QWidget(Qt_OpenCVClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        graphicsView = new QGraphicsView(centralWidget);
+        graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        graphicsView->setGeometry(QRect(50, 30, 421, 381));
         Qt_OpenCVClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Qt_OpenCVClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 600, 21));
+        menuBar->setGeometry(QRect(0, 0, 1018, 21));
         Qt_OpenCVClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(Qt_OpenCVClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -67,4 +72,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // QT_OPENCVP10392_H
+#endif // QT_OPENCVNL8016_H

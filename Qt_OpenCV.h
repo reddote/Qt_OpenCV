@@ -2,6 +2,8 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_Qt_OpenCV.h"
+#include "Header/VideoWindow.h"
+#include <qgraphicsview.h>
 
 class Qt_OpenCV : public QMainWindow
 {
@@ -12,5 +14,8 @@ public:
     ~Qt_OpenCV();
 
 private:
+	VideoWindow *videoWindow;
+	QGraphicsView *graphicsView;
+
     Ui::Qt_OpenCVClass ui;
 };

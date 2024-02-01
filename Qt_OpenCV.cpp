@@ -6,6 +6,7 @@ Qt_OpenCV::Qt_OpenCV(QWidget *parent)
 {
     ui.setupUi(this);
 
+	videoWindow = new VideoWindow(ui.graphicsView);
 }
 
 Qt_OpenCV::~Qt_OpenCV()
