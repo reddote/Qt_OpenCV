@@ -40,9 +40,16 @@ private:
 	void doPanning(const QPoint &pos);
 	void stopPanning();
 
-	void UpdatePictureUI();
+	void ThreadStarter();
+
+
 	QImage MatToQImage(const cv::Mat& mat);
 
+signals:
+	void workFinished();
+
 public slots:
+	void UpdatePictureUI();
+
 
 };

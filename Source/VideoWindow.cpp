@@ -1,12 +1,26 @@
 ﻿#include "..\Header\VideoWindow.h"
+#include <QThread>
 
 VideoWindow::VideoWindow(QWidget * parent) :
 	QGraphicsView(parent), scene(new QGraphicsScene(this))
 {
-	UpdatePictureUI();
+	ThreadStarter();
+}
+
+void VideoWindow::ThreadStarter() {
+	QThread* thread = new QThread();
+
+	this->moveToThread(thread);
+
+	connect(thread, &QThread::started, this, &VideoWindow::UpdatePictureUI);
+	connect(this, &VideoWindow::workFinished, thread, &QThread::quit);
+
+	thread->start();
+
 }
 
 void VideoWindow::UpdatePictureUI() {
+
 	// Path to the video file
 	std::string videoPath = "C:\\Users\\3DDL\\Desktop\\Qt_OpenCV\\1.mp4";
 
@@ -21,19 +35,21 @@ void VideoWindow::UpdatePictureUI() {
 	cv::Mat frame;
 
 	// Read a new frame from the video
-	bool isSuccess = videoCap.read(frame);
+	while (videoCap.read(frame)) {
+		image = MatToQImage(frame);
 
-	// Check if the frame has been successfully read
-	if (!isSuccess) {
-		std::cerr << "Error: Could not read frame from video file." << std::endl;
+
+		scene->clear();
+		scene->addPixmap(QPixmap::fromImage(image));
+		this->setScene(scene);
+		this->setFixedSize(421, 381);
+		this->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
+
+		// Artificial delay to simulate processing time and control the frame rate
+		cv::waitKey(1);
 	}
 
-	image = MatToQImage(frame);
-
-	scene->addPixmap(QPixmap::fromImage(image));
-	this->setScene(scene);
-	this->setFixedSize(421, 381);
-	this->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
+	emit workFinished();
 
 	/*// Create a window
 	cv::namedWindow("Window", cv::WINDOW_NORMAL); // Create a window with the name "Window"
