@@ -9,6 +9,7 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include "VideoProcessor.h"
 
 
 class VideoWindow : public QGraphicsView
@@ -18,6 +19,9 @@ class VideoWindow : public QGraphicsView
 public:
 	VideoWindow(QWidget *parent = nullptr);
 	~VideoWindow();
+
+	void startVideoProcessing();
+
 
 	QImage image;
 
@@ -40,9 +44,7 @@ private:
 	void doPanning(const QPoint &pos);
 	void stopPanning();
 
-	void UpdatePictureUI();
-	QImage MatToQImage(const cv::Mat& mat);
-
 public slots:
+	void UpdateFrameUI(const QImage & frame);
 
 };
