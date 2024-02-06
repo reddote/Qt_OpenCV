@@ -1,9 +1,10 @@
 ﻿#include "..\Header\VideoWindow.h"
 #include <QThread>
 
-VideoWindow::VideoWindow(QWidget * parent) :
+VideoWindow::VideoWindow(QString path, QWidget * parent) :
 	QGraphicsView(parent), scene(new QGraphicsScene(this))
 {
+	pathVideo = path;
 	ThreadStarter();
 }
 
@@ -15,17 +16,15 @@ void VideoWindow::ThreadStarter() {
 	connect(thread, &QThread::started, this, &VideoWindow::UpdatePictureUI);
 	connect(this, &VideoWindow::workFinished, thread, &QThread::quit);
 
-	thread->start();
-
 }
 
 void VideoWindow::UpdatePictureUI() {
 
 	// Path to the video file
 	std::string videoPath = "C:\\Users\\3DDL\\Desktop\\Qt_OpenCV\\1.mp4";
-
+	std::string path = pathVideo.toStdString();
 	// Create a VideoCapture object to read from the video file
-	cv::VideoCapture videoCap(videoPath);
+	cv::VideoCapture videoCap(path);
 
 	// Check if the file can be opened
 	if (!videoCap.isOpened()) {

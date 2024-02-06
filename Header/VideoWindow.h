@@ -16,7 +16,7 @@ class VideoWindow : public QGraphicsView
 	Q_OBJECT
 
 public:
-	VideoWindow(QWidget *parent = nullptr);
+	VideoWindow(QString path, QWidget *parent = nullptr);
 	~VideoWindow();
 
 	QImage image;
@@ -32,6 +32,7 @@ private:
 	cv::VideoCapture *videoCap;
 	QGraphicsScene *scene;
 	QGraphicsPixmapItem *item;
+	QString pathVideo;
 
 	bool _dragging;
 	QPointF _lastDragPoint;

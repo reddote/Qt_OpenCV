@@ -15,7 +15,9 @@ public:
 
 private:
 	VideoWindow *videoWindow;
+	VideoWindow *videoWindow_2;
 	QGraphicsView *graphicsView;
+	void VideoStarter();
 
     Ui::Qt_OpenCVClass ui;
 };
