@@ -50,15 +50,6 @@ void VideoWindow::UpdatePictureUI() {
 	}
 
 	emit workFinished();
-
-	/*// Create a window
-	cv::namedWindow("Window", cv::WINDOW_NORMAL); // Create a window with the name "Window"
-
-	// Show the image inside the created window
-	cv::imshow("Window", frame); // Show the captured frame inside the created window
-
-	// Wait for any keystroke in the window
-	cv::waitKey(0); // Wait for any keystroke in the window*/
 }
 
 QImage VideoWindow::MatToQImage(const cv::Mat& mat) {
