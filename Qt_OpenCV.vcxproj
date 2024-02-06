@@ -101,6 +101,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\ThreadWorker.cpp" />
+    <ClCompile Include="Source\VideoProcessor.cpp" />
     <ClCompile Include="Source\VideoWindow.cpp" />
     <QtRcc Include="Qt_OpenCV.qrc" />
     <QtUic Include="Qt_OpenCV.ui">
@@ -115,6 +117,12 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Header\VideoWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Header\ThreadWorker.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Header\VideoProcessor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -1,76 +1,36 @@
 ﻿#include "..\Header\VideoWindow.h"
 #include <QThread>
 
-VideoWindow::VideoWindow(QString path, QWidget * parent) :
+VideoWindow::VideoWindow(QString temppath, QWidget * parent) :
 	QGraphicsView(parent), scene(new QGraphicsScene(this))
 {
-	pathVideo = path;
-	ThreadStarter();
+	startVideoProcessing(temppath);
 }
 
-void VideoWindow::ThreadStarter() {
+void VideoWindow::startVideoProcessing(QString temp) {
 	QThread* thread = new QThread();
-
-	this->moveToThread(thread);
-
-	connect(thread, &QThread::started, this, &VideoWindow::UpdatePictureUI);
-	connect(this, &VideoWindow::workFinished, thread, &QThread::quit);
-	
-	thread->start();
-
-}
-
-void VideoWindow::UpdatePictureUI() {
-
+	VideoProcessor* processor = new VideoProcessor(); 
 	// Path to the video file
-	//std::string videoPath = "C:\\Users\\3DDL\\Desktop\\Qt_OpenCV\\1.mp4";
-	std::string path = pathVideo.toStdString();
-	// Create a VideoCapture object to read from the video file
-	cv::VideoCapture videoCap(path);
+	QString videoPath = temp;
 
-	// Check if the file can be opened
-	if (!videoCap.isOpened()) {
-		std::cerr << "Error: Could not open video file." << std::endl;
-	}
+	processor->SetVideoPath(videoPath);
+	processor->moveToThread(thread);
 
-	cv::Mat frame;
+	connect(thread, &QThread::started, processor, &VideoProcessor::ProcessVideo);
+	connect(processor, &VideoProcessor::frameReady, this, &VideoWindow::UpdateFrameUI);
+	connect(processor, &VideoProcessor::finished, thread, &QThread::quit);
 
-	// Read a new frame from the video
-	while (videoCap.read(frame)) {
-		image = MatToQImage(frame);
-
-		scene->clear();
-		scene->addPixmap(QPixmap::fromImage(image));
-		this->setScene(scene);
-		this->setFixedSize(421, 381);
-		this->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
-
-		// Artificial delay to simulate processing time and control the frame rate
-		cv::waitKey(1);
-	}
-
-	emit workFinished();
+	thread->start();
 }
 
-QImage VideoWindow::MatToQImage(const cv::Mat& mat) {
-	switch (mat.type()) {
-	case CV_8UC4: {
-		QImage image(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_ARGB32);
-		return image;
-	}
-	case CV_8UC3: {
-		QImage image(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
-		return image.rgbSwapped();
-	}
-	case CV_8UC1: {
-		QImage image(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_Grayscale8);
-		return image;
-	}
-	default:
-		qWarning("Unsupported Mat format in MatToQImage");
-		return QImage();
-	}
+// Slot in VideoWindow to update the UI with a new frame
+void VideoWindow::UpdateFrameUI(const QImage& frame) {
+	scene->addPixmap(QPixmap::fromImage(frame));
+	this->setScene(scene);
+	this->setFixedSize(421, 381);
+	this->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
 }
+
 
 //Mouse Controller Start
 void VideoWindow::wheelEvent(QWheelEvent *event) {

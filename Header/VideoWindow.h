@@ -9,6 +9,7 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include "VideoProcessor.h"
 
 
 class VideoWindow : public QGraphicsView
@@ -16,8 +17,11 @@ class VideoWindow : public QGraphicsView
 	Q_OBJECT
 
 public:
-	VideoWindow(QString path, QWidget *parent = nullptr);
+	VideoWindow(QString temppath, QWidget *parent = nullptr);
 	~VideoWindow();
+
+	void startVideoProcessing(QString temp);
+
 
 	QImage image;
 
@@ -32,7 +36,7 @@ private:
 	cv::VideoCapture *videoCap;
 	QGraphicsScene *scene;
 	QGraphicsPixmapItem *item;
-	QString pathVideo;
+	QString path;
 
 	bool _dragging;
 	QPointF _lastDragPoint;
@@ -41,16 +45,7 @@ private:
 	void doPanning(const QPoint &pos);
 	void stopPanning();
 
-	void ThreadStarter();
-
-
-	QImage MatToQImage(const cv::Mat& mat);
-
-signals:
-	void workFinished();
-
 public slots:
-	void UpdatePictureUI();
-
+	void UpdateFrameUI(const QImage & frame);
 
 };
