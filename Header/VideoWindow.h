@@ -22,9 +22,6 @@ public:
 
 	void startVideoProcessing(QString temp);
 
-
-	QImage image;
-
 protected:
 	void wheelEvent(QWheelEvent *event) override;
 	void mousePressEvent(QMouseEvent *event) override;
@@ -35,7 +32,6 @@ private:
 	QTimer *timer;
 	cv::VideoCapture *videoCap;
 	QGraphicsScene *scene;
-	QGraphicsPixmapItem *item;
 	QString path;
 
 	bool _dragging;

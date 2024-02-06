@@ -23,14 +23,14 @@ void VideoProcessor::ProcessVideo() {
 	}
 
 	cv::Mat frame;
+	cv::Mat tempFrame;
 	while (capture.read(frame)) {
-		cv::Mat tempFrame;
 		cvtColor(frame, tempFrame, cv::COLOR_RGB2BGR);
 		QImage image = MatToQImage(tempFrame);
 		emit frameReady(image);
 
 		// Artificial delay to simulate processing time and control the frame rate
-		cv::waitKey(1); 
+		cv::waitKey(15); 
 	}
 
 	qDebug() << "Video processing completed.";
