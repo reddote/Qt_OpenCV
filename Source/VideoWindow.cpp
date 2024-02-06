@@ -15,13 +15,15 @@ void VideoWindow::ThreadStarter() {
 
 	connect(thread, &QThread::started, this, &VideoWindow::UpdatePictureUI);
 	connect(this, &VideoWindow::workFinished, thread, &QThread::quit);
+	
+	thread->start();
 
 }
 
 void VideoWindow::UpdatePictureUI() {
 
 	// Path to the video file
-	std::string videoPath = "C:\\Users\\3DDL\\Desktop\\Qt_OpenCV\\1.mp4";
+	//std::string videoPath = "C:\\Users\\3DDL\\Desktop\\Qt_OpenCV\\1.mp4";
 	std::string path = pathVideo.toStdString();
 	// Create a VideoCapture object to read from the video file
 	cv::VideoCapture videoCap(path);
@@ -36,7 +38,6 @@ void VideoWindow::UpdatePictureUI() {
 	// Read a new frame from the video
 	while (videoCap.read(frame)) {
 		image = MatToQImage(frame);
-
 
 		scene->clear();
 		scene->addPixmap(QPixmap::fromImage(image));
