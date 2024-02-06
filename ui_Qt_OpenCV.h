@@ -1,13 +1,22 @@
 /********************************************************************************
+<<<<<<< HEAD
 ** Form generated from reading UI file 'Qt_OpenCVmU6820.ui'
+=======
+** Form generated from reading UI file 'Qt_OpenCVp14880.ui'
+>>>>>>> feature/playableScene
 **
 ** Created by: Qt User Interface Compiler version 5.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
+<<<<<<< HEAD
 #ifndef QT_OPENCVMU6820_H
 #define QT_OPENCVMU6820_H
+=======
+#ifndef QT_OPENCVP14880_H
+#define QT_OPENCVP14880_H
+>>>>>>> feature/playableScene
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
@@ -45,7 +54,11 @@ public:
         graphicsView->setGeometry(QRect(50, 30, 421, 381));
         graphicsView_2 = new QGraphicsView(centralWidget);
         graphicsView_2->setObjectName(QStringLiteral("graphicsView_2"));
+<<<<<<< HEAD
         graphicsView_2->setGeometry(QRect(490, 30, 421, 381));
+=======
+        graphicsView_2->setGeometry(QRect(510, 30, 421, 381));
+>>>>>>> feature/playableScene
         Qt_OpenCVClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Qt_OpenCVClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -76,4 +89,8 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
+<<<<<<< HEAD
 #endif // QT_OPENCVMU6820_H
+=======
+#endif // QT_OPENCVP14880_H
+>>>>>>> feature/playableScene

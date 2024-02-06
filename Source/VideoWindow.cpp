@@ -1,6 +1,7 @@
 ﻿#include "..\Header\VideoWindow.h"
 #include <QThread>
 
+<<<<<<< HEAD
 VideoWindow::VideoWindow(QString path, QWidget * parent) :
 	QGraphicsView(parent), scene(new QGraphicsScene(this))
 {
@@ -27,14 +28,31 @@ void VideoWindow::UpdatePictureUI() {
 	std::string path = pathVideo.toStdString();
 	// Create a VideoCapture object to read from the video file
 	cv::VideoCapture videoCap(path);
+=======
+VideoWindow::VideoWindow(QString temppath, QWidget * parent) :
+	QGraphicsView(parent), scene(new QGraphicsScene(this))
+{
+	startVideoProcessing(temppath);
+}
 
-	// Check if the file can be opened
-	if (!videoCap.isOpened()) {
-		std::cerr << "Error: Could not open video file." << std::endl;
-	}
+void VideoWindow::startVideoProcessing(QString temp) {
+	QThread* thread = new QThread();
+	VideoProcessor* processor = new VideoProcessor(); 
+	// Path to the video file
+	QString videoPath = temp;
 
-	cv::Mat frame;
+	processor->SetVideoPath(videoPath);
+	processor->moveToThread(thread);
+>>>>>>> feature/playableScene
 
+	connect(thread, &QThread::started, processor, &VideoProcessor::ProcessVideo);
+	connect(processor, &VideoProcessor::frameReady, this, &VideoWindow::UpdateFrameUI);
+	connect(processor, &VideoProcessor::finished, thread, &QThread::quit);
+
+	thread->start();
+}
+
+<<<<<<< HEAD
 	// Read a new frame from the video
 	while (videoCap.read(frame)) {
 		image = MatToQImage(frame);
@@ -50,27 +68,16 @@ void VideoWindow::UpdatePictureUI() {
 	}
 
 	emit workFinished();
+=======
+// Slot in VideoWindow to update the UI with a new frame
+void VideoWindow::UpdateFrameUI(const QImage& frame) {
+	scene->addPixmap(QPixmap::fromImage(frame));
+	this->setScene(scene);
+	this->setFixedSize(421, 381);
+	this->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
+>>>>>>> feature/playableScene
 }
 
-QImage VideoWindow::MatToQImage(const cv::Mat& mat) {
-	switch (mat.type()) {
-	case CV_8UC4: {
-		QImage image(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_ARGB32);
-		return image;
-	}
-	case CV_8UC3: {
-		QImage image(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
-		return image.rgbSwapped();
-	}
-	case CV_8UC1: {
-		QImage image(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_Grayscale8);
-		return image;
-	}
-	default:
-		qWarning("Unsupported Mat format in MatToQImage");
-		return QImage();
-	}
-}
 
 //Mouse Controller Start
 void VideoWindow::wheelEvent(QWheelEvent *event) {
