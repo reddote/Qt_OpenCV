@@ -1,19 +1,19 @@
 ﻿#include "..\Header\VideoWindow.h"
 #include <QThread>
 
-VideoWindow::VideoWindow(QWidget * parent) :
+VideoWindow::VideoWindow(QString temppath, QWidget * parent) :
 	QGraphicsView(parent), scene(new QGraphicsScene(this))
 {
-	startVideoProcessing();
+	startVideoProcessing(temppath);
 }
 
-void VideoWindow::startVideoProcessing() {
+void VideoWindow::startVideoProcessing(QString temp) {
 	QThread* thread = new QThread();
 	VideoProcessor* processor = new VideoProcessor(); 
 	// Path to the video file
-	QString videoPath = "C:\\Users\\3DDL\\Desktop\\Qt_OpenCV\\1.mp4";
-	processor->SetVideoPath(videoPath);
+	QString videoPath = temp;
 
+	processor->SetVideoPath(videoPath);
 	processor->moveToThread(thread);
 
 	connect(thread, &QThread::started, processor, &VideoProcessor::ProcessVideo);
@@ -25,8 +25,9 @@ void VideoWindow::startVideoProcessing() {
 
 // Slot in VideoWindow to update the UI with a new frame
 void VideoWindow::UpdateFrameUI(const QImage& frame) {
-	scene->clear(); // Clear previous frame
 	scene->addPixmap(QPixmap::fromImage(frame));
+	this->setScene(scene);
+	this->setFixedSize(421, 381);
 	this->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
 }
 

@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'Qt_OpenCVNl8016.ui'
+** Form generated from reading UI file 'Qt_OpenCVp14880.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef QT_OPENCVNL8016_H
-#define QT_OPENCVNL8016_H
+#ifndef QT_OPENCVP14880_H
+#define QT_OPENCVP14880_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
@@ -28,6 +28,7 @@ class Ui_Qt_OpenCVClass
 public:
     QWidget *centralWidget;
     QGraphicsView *graphicsView;
+    QGraphicsView *graphicsView_2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -42,6 +43,9 @@ public:
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
         graphicsView->setGeometry(QRect(50, 30, 421, 381));
+        graphicsView_2 = new QGraphicsView(centralWidget);
+        graphicsView_2->setObjectName(QStringLiteral("graphicsView_2"));
+        graphicsView_2->setGeometry(QRect(510, 30, 421, 381));
         Qt_OpenCVClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Qt_OpenCVClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -72,4 +76,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // QT_OPENCVNL8016_H
+#endif // QT_OPENCVP14880_H

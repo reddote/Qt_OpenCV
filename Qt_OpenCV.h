@@ -11,10 +11,12 @@ class Qt_OpenCV : public QMainWindow
 
 public:
     Qt_OpenCV(QWidget *parent = nullptr);
+	void InitVideoWindows();
 	~Qt_OpenCV();
 
 private:
 	VideoWindow *videoWindow;
+	VideoWindow *videoWindow2;
 	QGraphicsView *graphicsView;
 
     Ui::Qt_OpenCVClass ui;
