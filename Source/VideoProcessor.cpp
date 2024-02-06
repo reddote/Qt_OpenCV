@@ -24,11 +24,12 @@ void VideoProcessor::ProcessVideo() {
 
 	cv::Mat frame;
 	while (capture.read(frame)) {
+		cvtColor(frame, frame, cv::COLOR_RGB2BGR);
 		QImage image = MatToQImage(frame);
 		emit frameReady(image);
 
 		// Artificial delay to simulate processing time and control the frame rate
-		cv::waitKey(1); // Adjust as needed
+		cv::waitKey(1); 
 	}
 
 	qDebug() << "Video processing completed.";
@@ -38,21 +39,19 @@ void VideoProcessor::ProcessVideo() {
 QImage VideoProcessor::MatToQImage(const cv::Mat &mat) {
 	switch (mat.type()) {
 	case CV_8UC4: {
-		QImage image(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_ARGB32);
-		return image.copy(); // Use copy to detach from shared buffer
+		QImage image((uchar*)mat.data, mat.cols, mat.rows, mat.step, QImage::Format_ARGB32);
+		return image.copy();
 	}
 	case CV_8UC3: {
-		QImage image(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
-		return image.rgbSwapped().copy(); // Use copy to detach from shared buffer
+		QImage image((uchar*)mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
+		return image.rgbSwapped().copy();
 	}
 	case CV_8UC1: {
-		QImage image(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_Grayscale8);
-		return image.copy(); // Use copy to detach from shared buffer
+		QImage image((uchar*)mat.data, mat.cols, mat.rows, mat.step, QImage::Format_Grayscale8);
+		return image.copy();
 	}
 	default:
-		qDebug() << "Unsupported Mat format";
-		break;
+		qWarning("Unsupported Mat format in MatToQImage");
+		return QImage();
 	}
-
-	return QImage();
 }

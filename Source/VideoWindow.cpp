@@ -9,10 +9,11 @@ VideoWindow::VideoWindow(QWidget * parent) :
 
 void VideoWindow::startVideoProcessing() {
 	QThread* thread = new QThread();
-	VideoProcessor* processor = new VideoProcessor(); // Assuming VideoProcessor is your worker class
+	VideoProcessor* processor = new VideoProcessor(); 
 	// Path to the video file
 	QString videoPath = "C:\\Users\\3DDL\\Desktop\\Qt_OpenCV\\1.mp4";
 	processor->SetVideoPath(videoPath);
+
 	processor->moveToThread(thread);
 
 	connect(thread, &QThread::started, processor, &VideoProcessor::ProcessVideo);
